@@ -4,8 +4,10 @@ RAG implementation with LangChain using Ollama.ai
 
 RAG is an AI framework for retrieving facts from an external knowledge base to ground large language models (LLMs) on the most accurate, up-to-date information and to give users insight into LLMs' generative process.
 
-With the streamlit webUI you can upload PDF or link any online document or article. then query the bot regarding it.
+This is 100% offline bot, So no data leak. With the streamlit webUI you can upload PDF or link any online document or article. then query the bot regarding it.
 
+This is using Mistral LLM model https://huggingface.co/TheBloke/Mistral-7B-Instruct-v0.2-GGUF
+However with Ollama you can use many different model https://ollama.ai/library
 
 This notebook file in the repo explain the code step by step
 
