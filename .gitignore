@@ -121,6 +121,7 @@ env.bak/
 venv.bak/
 .vscode
 .vscode/
+chroma_db
 # Spyder project settings
 .spyderproject
 .spyproject
