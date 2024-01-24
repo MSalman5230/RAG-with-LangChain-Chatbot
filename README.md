@@ -9,6 +9,7 @@ This is 100% offline bot, So no data leak. With the streamlit webUI you can uplo
 This is using Mistral:7B LLM model https://huggingface.co/TheBloke/Mistral-7B-Instruct-v0.2-GGUF
 However with Ollama you can use many different models https://ollama.ai/library
 
+## Example
 ![Alt Text](UI-Demo.png)
 
 This notebook file in the repo explain the code step by step
