@@ -16,8 +16,9 @@ RAG-With-Chatbot-Explanation.ipynb
  1. Install Ollama from https://ollama.ai
  2. Clone this repo
  3. create venv and install requirements.txt
- 4. Set ```bash
+ 4. Set 
+ ```bash
 OLLAMA_URL
 ```
-  to your OLLAMA URL,in app.py if you are using it on same machine it will be localhost
+to your OLLAMA URL, in app.py if you are using it on same machine it will be localhost
  5. streamlit run.py
