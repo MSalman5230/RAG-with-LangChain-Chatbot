@@ -12,7 +12,7 @@ import tempfile
 import os
 import shutil
 from langchain import hub
-
+OLLAMA_URL="http://172.17.10.68:11434"
 # from streamlit.report_thread import get_report_ctx
 
 # -----------Funtions-------------------------------------------------
@@ -123,7 +123,7 @@ if "prompt_history" not in st.session_state:
 
 if "chat_model" not in st.session_state:
     st.session_state.chat_model = Ollama(
-        base_url="http://172.17.10.68:11434", model="mistral"
+        base_url=OLLAMA_URL, model="mistral"
     )
 
 if "vectorstore" not in st.session_state:
