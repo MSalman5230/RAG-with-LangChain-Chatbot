@@ -30,10 +30,11 @@ def _get_session():
         raise RuntimeError("Couldn't get your Streamlit Session object.")
     return session_info.session
 
-
-user_session = _get_session()
-user_session_id = user_session.id
-print("user_session", user_session_id)
+if "user_session_id" not in st.session_state:
+    user_session = _get_session()
+    user_session_id = user_session.id
+    st.session_state.user_session_id=user_session_id
+    print("user_session", user_session_id)
 
 
 def save_uploaded_pdf(uploaded_file):
@@ -87,7 +88,7 @@ def get_vectordb_from_chunks(chunks1, chunk2):
             model="mistral"
         ),  # this is better by far, GPT4AllEmbeddings gives inconsistant query result
         persist_directory="./chroma_db",
-        collection_name=user_session_id,
+        collection_name=st.session_state.user_session_id,
     )
 
     return vectorstore
