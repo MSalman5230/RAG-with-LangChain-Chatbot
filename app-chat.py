@@ -105,7 +105,7 @@ def augment_prompt(query: str) -> str:
     # Can try to play around the initial part prompt
     # Using the contexts below, answer the query. OR
     # Use the following pieces of retrieved context to answer the question. If you don't know the answer, just say that you don't know. Use three sentences maximum and keep the answer concise.
-    augmented_prompt = f"""Using the contexts below, answer the query.
+    augmented_prompt = f"""Only use the following Contexts provided bellow to answer the query. If the answers to query is not in the Context, Just say you not there in the Contexts and dont not provide any information regarding it.
     Contexts:
     {source_knowledge}
     Query: {query}"""
@@ -123,7 +123,7 @@ if "prompt_history" not in st.session_state:
     st.session_state.prompt_history = []
 
 if "chat_model" not in st.session_state:
-    st.session_state.chat_model = Ollama(base_url=OLLAMA_URL, model="mistral")
+    st.session_state.chat_model = ChatOllama(base_url=OLLAMA_URL, model="mistral")
 
 if "vectorstore" not in st.session_state:
     st.session_state.vectorstore = None
@@ -169,24 +169,16 @@ prompt = st.chat_input("Ask question")
 if prompt:
     st.chat_message("user").markdown(prompt)
     st.session_state.messages.append({"role": "user", "content": prompt})
+    prompt = HumanMessage(content=augment_prompt(prompt))
+    st.session_state.prompt_history.append(prompt)
+    res = st.session_state.chat_model(st.session_state.prompt_history)
 
-    qa_chain = RetrievalQA.from_chain_type(
-        st.session_state.chat_model,
-        retriever=st.session_state.vectorstore.as_retriever(),
-        chain_type="stuff",
-        chain_type_kwargs={"prompt": st.session_state.prompt_template},
-        return_source_documents=True,
-        verbose=True,
-    )
-    res = qa_chain(
-        {"query": prompt},
-    )
-    st.session_state.messages.append({"role": "assistant", "content": res["result"]})
-    st.chat_message("assistant").markdown(res["result"])
+    st.session_state.messages.append({"role": "assistant", "content": res.content})
+    st.chat_message("assistant").markdown(res.content)
     print("########################################")
     print(prompt)
     print("########################################")
-    print(res["result"])
+    print(res.content)
     print("########################################")
     print(res)
 
