@@ -13,8 +13,8 @@ import os
 import shutil
 from langchain import hub
 
-#OLLAMA_URL = "http://172.17.10.68:11434" #WSL2
-OLLAMA_URL = "http://127.0.0.1:11434"
+OLLAMA_URL = "http://172.17.10.68:11434" #WSL2
+#OLLAMA_URL = "http://127.0.0.1:11434"
 # from streamlit.report_thread import get_report_ctx
 st.set_page_config(page_title="LLM with RAG", page_icon=":cyclone:")
 # -----------Funtions-------------------------------------------------
