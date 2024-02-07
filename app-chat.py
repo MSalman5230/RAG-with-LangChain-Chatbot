@@ -13,7 +13,8 @@ import os
 import shutil
 from langchain import hub
 
-OLLAMA_URL = "http://172.17.10.68:11434"
+#OLLAMA_URL = "http://172.17.10.68:11434" #WSL2
+OLLAMA_URL = "http://127.0.0.1:11434"
 # from streamlit.report_thread import get_report_ctx
 st.set_page_config(page_title="LLM with RAG", page_icon=":cyclone:")
 # -----------Funtions-------------------------------------------------
@@ -30,10 +31,11 @@ def _get_session():
         raise RuntimeError("Couldn't get your Streamlit Session object.")
     return session_info.session
 
+
 if "user_session_id" not in st.session_state:
     user_session = _get_session()
     user_session_id = user_session.id
-    st.session_state.user_session_id=user_session_id
+    st.session_state.user_session_id = user_session_id
     print("user_session", user_session_id)
 
 
@@ -97,7 +99,7 @@ def get_vectordb_from_chunks(chunks1, chunk2):
 def augment_prompt(query: str) -> str:
     # get top 3 results from knowledge base. You can play with k to tune the answers, it also depend on how your knowledge was stored.ie Chuck Size etc
     results = st.session_state.vectorstore.similarity_search(
-        query, k=2
+        query, k=3
     )  # result also return the source documents as metadata
     # get the text from the results
     source_knowledge = "\n".join([x.page_content for x in results])
@@ -106,7 +108,7 @@ def augment_prompt(query: str) -> str:
     # Can try to play around the initial part prompt
     # Using the contexts below, answer the query. OR
     # Use the following pieces of retrieved context to answer the question. If you don't know the answer, just say that you don't know. Use three sentences maximum and keep the answer concise.
-    augmented_prompt = f"""Only use the following Contexts provided bellow to answer the query. If the answers to query is not in the Context, Just say you not there in the Contexts and dont not provide any information regarding it.
+    augmented_prompt = f"""Only use the following Contexts provided bellow to answer the query. If the answers to query is not in the Context, Just say it is not there in the Contexts and dont not provide any information regarding it. Keep the answer concise.
     Contexts:
     {source_knowledge}
     Query: {query}"""
